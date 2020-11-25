@@ -1,19 +1,10 @@
-import pytest
-import mock
-from unittest import mock
 from unittest.mock import *
-from pytest_bdd import scenario, parsers, given, when, then
+from pytest_bdd import scenario, given, when, then
 import full_retirement_main
-from full_retirement_main import *
-from calculate_benefit import *
 
 
 # Constants
 CURRENT_YEAR = 2020
-
-#EXTRA_TYPES = {
-#    'Number': int,
-#}
 
 CONVERTERS = {
     'birth_year': str,

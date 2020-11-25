@@ -1,10 +1,4 @@
-import pytest
-from unittest import mock
 from unittest.mock import *
-from nose.tools import *
-import io
-#from full_retirement_main import main
-import mock
 from calculate_benefit import *
 
 '''
