@@ -66,6 +66,6 @@ def calc_date(y: int, m: int):
     retire_month = birth_month + months_to_add
     if retire_month > 12:
         retire_year += 1
-        retire_month = 12 - retire_month
+        retire_month = retire_month - 12
 
     return retire_year, retire_month

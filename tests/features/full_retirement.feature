@@ -3,14 +3,37 @@ Feature: Full Retirement Benefits Calculator
 
 
   Background:
-    Given the full_retirement_main program is running
+    Given the full_retirement_main program is available
+
 
   Scenario Outline: Year too low or high
-    When the birth year "<year>" and month "<month>" are input
-    Then program prints "Please enter a valid date between 1900 and 2020"
+    When the birth year "<year>" is input
+    Then program prints: Please enter a valid date between 1900 and 2020
+
     Examples: Birth Years and Months
-      | year | month |
-      | 1899 | 1     |
-      | 2021 | 1     |
+      | year |
+      | 1899 |
+      | 2021 |
 
 
+
+  Scenario Outline: Year and month combo that rolls over
+    When the program runs with birth year "<birth_year>" and birth month "<birth_month>"
+    Then the month and year of retirement are January of "<retire_year>"
+
+    Examples: Birth and Retire Years and Months
+      | birth_year | birth_month | retire_year |
+      | 1900       | 1           | 1965        |
+      | 1938       | 11          | 2004        |
+      | 1939       | 9           | 2005        |
+      | 1940       | 7           | 2006        |
+      | 1941       | 5           | 2007        |
+      | 1942       | 3           | 2008        |
+      | 1943       | 1           | 2009        |
+      | 1954       | 1           | 2020        |
+      | 1955       | 11          | 2022        |
+      | 1956       | 9           | 2023        |
+      | 1957       | 7           | 2024        |
+      | 1958       | 5           | 2025        |
+      | 1959       | 3           | 2026        |
+      | 1960       | 1           | 2027        |
