@@ -1,5 +1,6 @@
+import pytest
 from unittest.mock import *
-from pytest_bdd import scenario, given, when, then
+from pytest_bdd import scenario, parsers, given, when, then
 import full_retirement_main
 
 
@@ -27,6 +28,16 @@ class Retirement:
 # Scenarios
 
 
+@scenario('../features/full_retirement.feature', 'Non digit year', example_converters=CONVERTERS)
+def test_nondigit_year():
+    pass
+
+
+@scenario('../features/full_retirement.feature', 'Non digit month', example_converters=CONVERTERS)
+def test_nondigit_month():
+    pass
+
+
 @scenario('../features/full_retirement.feature', 'Year too low or high', example_converters=CONVERTERS)
 def test_low_high_years():
     pass
@@ -51,6 +62,7 @@ def retire_main():
 
 # Whens
 
+@when(parsers.parse('nondigit birth year "{year}" is input'))
 @when('the birth year "<year>" is input')
 def enter_birth(year, capsys, monkeypatch, retire_main):
     mock_input = Mock()
@@ -60,6 +72,7 @@ def enter_birth(year, capsys, monkeypatch, retire_main):
     out, err = capsys.readouterr()
     retire_main.save_output(out)
 
+@when(parsers.parse('birth year "{birth_year}" and nondigit birth month "{birth_month}" are input'))
 @when('the program runs with birth year "<birth_year>" and invalid birth month "<birth_month>"')
 def invalid_month(birth_year, birth_month, retire_main, capsys, monkeypatch):
     mock_input = Mock()
@@ -81,6 +94,16 @@ def rollover_birth(birth_year, birth_month, retire_main, capsys, monkeypatch):
 
 
 # Thens
+
+@then('program prints: Please enter a numerical date between 1900 and 2020')
+def reject_nondigit_year(retire_main):
+    assert "Please enter a numerical date between 1900 and 2020" in retire_main.output
+
+
+@then('program prints: Please enter a numerical month between 1-12')
+def reject_nondigit_month(retire_main):
+    assert "Please enter a numerical month between 1-12" in retire_main.output
+
 
 @then('program prints: Please enter a valid date between 1900 and 2020')
 def reject_year(retire_main):

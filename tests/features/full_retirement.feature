@@ -6,6 +6,16 @@ Feature: Full Retirement Benefits Calculator
     Given the full_retirement_main program is available
 
 
+  Scenario: Non digit year
+    When nondigit birth year "A" is input
+    Then program prints: Please enter a numerical date between 1900 and 2020
+
+
+  Scenario: Non digit month
+    When birth year "1900" and nondigit birth month "A" are input
+    Then program prints: Please enter a numerical month between 1-12
+
+
   Scenario Outline: Year too low or high
     When the birth year "<year>" is input
     Then program prints: Please enter a valid date between 1900 and 2020
