@@ -16,6 +16,15 @@ Feature: Full Retirement Benefits Calculator
       | 2021 |
 
 
+  Scenario Outline: Month too low or high
+    When the program runs with birth year "<birth_year>" and invalid birth month "<birth_month>"
+    Then program prints: Please enter a valid month between 1-12
+
+    Examples: Birth Year 1900 and Invalid Months
+      | birth_year | birth_month |
+      | 1900       | 0           |
+      | 1900       | 13          |
+
 
   Scenario Outline: Year and month combo that rolls over
     When the program runs with birth year "<birth_year>" and birth month "<birth_month>"
